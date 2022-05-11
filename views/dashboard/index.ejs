@@ -1,0 +1,86 @@
+<div class="container mt-5">
+   <div class="row">
+      <div class="col-12">
+         <div class="card user-card">
+            <div class="card-body">
+               Notifikasi : <span style="color:blue" id="notif"></span>
+            </div>
+         </div>
+      </div>
+   </div>
+   <div class="row mt-3">
+      <div class="col-md-9" id="">
+         <%- include(content)  %>
+      </div>
+      <div class="col-md-3">
+         <div class="list-group mb-3">
+            <a href="<%= fullUrl %>/user/dashboard" data-menu="dashboard" class="list-group-item list-group-item-action">
+              <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1"><i class="fas fa-tachometer-alt fa-fw"></i> Dashboard</h5>
+              </div>
+            </a>
+            <a href="<%= fullUrl %>/user/auto-reply" data-menu="dashboard" class="list-group-item list-group-item-action">
+               <div class="d-flex w-100 justify-content-between">
+                 <h5 class="mb-1"><i class="fas fa-user-md-chat fa-fw"></i> Auto Reply</h5>
+               </div>
+             </a>
+            <a href="<%= fullUrl %>/user/utility" data-menu="utility" class="list-group-item list-group-item-action">
+               <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1"><i class="fas fa-star fa-fw"></i> Utilitas/Tools</h5>
+               </div>
+            </a>
+            <a href="<%= fullUrl %>/user/log-system" data-menu="log_system" class="list-group-item list-group-item-action">
+               <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1"><i class="fas fa-info-circle fa-fw"></i> Log Sistem</h5>
+               </div>
+            </a>
+            <a href="<%= fullUrl %>/user/test-webhook" data-menu="log_system" class="list-group-item list-group-item-action">
+               <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1"><i class="fas fa-bell fa-fw"></i> Test Webhook</h5>
+               </div>
+            </a>
+            <a href="https://documenter.getpostman.com/view/13310053/TVYKbwbT" class="list-group-item list-group-item-action">
+               <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1"><i class="fas fa-book fa-fw"></i> Dokumentasi API</h5>
+               </div>
+            </a>
+            <a href="mailto:demo@whapi.id" class="list-group-item list-group-item-action">
+               <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1"><i class="fas fa-bug fa-fw"></i> Lapor Bug</h5>
+               </div>
+            </a>
+            <a href="<%= fullUrl %>/user/changelog" class="list-group-item list-group-item-action">
+               <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1"><i class="fas fa-history fa-fw"></i> Changelog</h5>
+               </div>
+            </a>
+            </div>
+         <div class="list-group">
+            <a href="<%= fullUrl %>/user/account" class="list-group-item list-group-item-action">
+               <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1"><i class="fas fa-user fa-fw"></i> Detail Akun</h5>
+               </div>
+            </a>
+            <a href="<%= fullUrl %>/user/settings" class="list-group-item list-group-item-action">
+               <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1"><i class="fas fa-cogs fa-fw"></i> Setting Aplikasi</h5>
+               </div>
+            </a>
+            <a href="<%= fullUrl %>/user/logout" class="list-group-item list-group-item-action">
+              <div class="d-flex w-100 justify-content-between">
+               <h5 class="mb-1"><i class="fas fa-lock fa-fw"></i> Logout</h5>
+              </div>
+            </a>
+          </div>
+      </div>
+   </div>
+   <div class="row mt-3">
+      <div class="col">
+          <div class="card">
+              <div class="card-body">
+                  &copy; <%= new Date().getFullYear() %>, Powered By WHAPI
+              </div>
+          </div>
+      </div>
+    </div>
+</div>

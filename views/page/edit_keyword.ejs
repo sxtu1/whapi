@@ -1,0 +1,72 @@
+<div class="row">
+    <div class="col-md-12">
+       <div class="card user-card">
+          <div class="card-body">
+            <h2>Edit Keyword</h2>
+            <form id="edit-keyword" method="post">
+                <input class="form-control" type="hidden" value="<%= detail._id %>" name="id">
+                <div class="form-group">
+                    <label>Keyword</label>
+                    <input class="form-control" type="hidden" id="keyword_val" value="<%= detail.keyword %>" name="keyword_val">
+                    <input class="form-control" type="text" id="keyword" value="<%= detail.keyword %>" name="keyword">
+                </div>
+                <div class="form-group">
+                    <label>Tipe</label>
+                    <select class="form-control" name="type_keyword">
+                        <option value="text">Text</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Jawaban</label>
+                    <textarea class="form-control" id="reply" name="reply"><%= detail.response_reply %></textarea>
+                </div>
+               <div class="form-group">
+                  <button class="btn btn-primary" type="submit">Perbaharui Informasi</button>
+                  <a href="<%= fullUrl %>/user/auto-reply" class="btn btn-info">Kembali</a>
+               </div>
+             </form>
+         </div>
+       </div>
+    </div>
+</div>
+<script>
+  $('#edit-keyword').validate({
+    rules: {
+      keyword: {
+        required: true
+      },
+      type_keyword: {
+        required: true
+      },
+      reply:{
+        required: true
+      }
+    },
+    messages: {
+      keyword: {
+        required: 'Keyword wajib diisi'
+      },
+    type_keyword: {
+        required: 'Type wajib diisi'
+      },
+    reply:{
+        required: 'Jawaban wajib diisi'
+      }
+    },
+    submitHandler: function(form) {
+      $.ajax({
+          type: 'POST',
+          url: '<%= fullUrl %>/user/updateKeywordSubmit',
+          data: $('#edit-keyword').serialize(),
+          success: function(e) {
+            $("#notif").notify(e.results.message, { position:"right", className: 'info', arrowShow: false });
+          },
+          error: function(xhr, status, error) {
+            var errorMessage = "Ada error : xhr = " + xhr.status + ' | pesan = ' + xhr.statusText;
+            $("#notif").notify(errorMessage, { position:"right", className: 'error', arrowShow: false });
+          }
+      });
+    }
+  });
+
+</script>

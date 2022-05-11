@@ -1,0 +1,72 @@
+<div class="container mt-5">
+    <div class="row">
+       <div class="col-md-12">
+          <div class="card user-card">
+             <div class="card-body">
+                <span id="message"></span>
+                <h1>Install License</h1>
+                <p>Masukkan license yang Anda dapatkan dari pembelian.</p>
+                <form id="install-license" method="post">
+                    <div class="form-group">
+                        <label>License</label>
+                        <input type="text" disabled name="license" value="LICENSE_SUDAH_DI_INSTALL" class="form-control" placeholder="XXXX-XXXX-XXXX-XXXX" autocomplete="off">
+                        <p>Belum punya license ? <a href="https://whapi.id/payment_page.html?source=app" target="blank">beli disini</a></p>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" class="btn btn-primary" <%= license.active ? 'disabled' : '' %> value="Install">
+                        <% if(true) {%>
+                            <a href="<%= fullUrl %>/login" class="btn btn-info">Login</a>
+                        <% } %>
+                    </div>
+                </form>
+            </div>
+          </div>
+       </div>
+    </div>
+    <div class="row mt-4">
+        <div class="col">
+            <div class="card">
+                <div class="card-body">
+                    &copy; <%= new Date().getFullYear() %>, Powered By WHAPI
+                </div>
+            </div>
+        </div>
+    </div>
+ </div>
+ 
+ <script>
+
+    $('#install-license').validate({
+        rules: {
+            license: {
+                required: false
+            }
+        },
+        messages: {
+            license: {
+                required: 'License wajib diisi'
+            }
+        },
+        submitHandler: function(form) {
+            $.ajax({
+               type: 'POST',
+               url: '<%= fullUrl %>/install-license',
+               data: $('#install-license').serialize(),
+               success: function(e) {
+                   if (e.status) {
+                        setInterval(function(){
+                            window.location.href = '<%= fullUrl %>/signup'
+                        }, 3000)
+                   }
+                   $("input[name=license]").val('');
+                   $('#message').html('<div class="alert alert-'+e.clr+'" role="alert">' + e.message + '</div>').fadeIn(1000);
+                   
+               },
+               error: function(xhr, status, error) {
+                    alert( "Ada error : xhr = " + xhr.status + ' | pesan = ' + xhr.statusText );
+               }
+            });
+        }
+    })
+
+ </script>

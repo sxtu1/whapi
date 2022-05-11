@@ -1,0 +1,59 @@
+<div class="container mt-5">
+    <div class="row">
+       <div class="col-md-12">
+          <div class="card user-card">
+             <div class="card-body">
+                <% if(message.length) {%>
+					<div class="alert alert-<%= type %>" role="alert">
+					  <%= message %>
+					</div>
+				<% } %>
+                <h1>Maaf, ada kesalahan teknis!</h1>
+                <p>Anda tidak perlu khawatir, silahkan cek salah satu kendala dibawah ini</p>
+                <table class="table table-bordered">
+                    <tr>
+                        <th width="15%"># Kendala</th>
+                        <th width="55%">Keterangan</th>
+                        <th width="30%">Status saat ini</th>
+                    </tr>
+                    <tr>
+                        <td>Status Server</td>
+                        <td>Aplikasi selalu berkomunikasi dengan server, ketika server ada gangguan, aplikasi juga akan berhenti.</td>
+                        <td><%- app.isServerMessage %></td>
+                    </tr>
+                    <tr>
+                        <td>File license.json</td>
+                        <td>File ini dibutuhkan aplikasi agar berjalan dengan lancar, jika Anda menemukan error pada bagian ini, silahkan akses <a href="<%= fullUrl %>/install"> halaman ini</a>.</td>
+                        <td><%- app.isLicenseMessage %></td>
+                    </tr>
+                    <tr>
+                        <td>License Expired</td>
+                        <td>Jika license Anda sudah expired, maka layanan WHAPI tidak bisa berhenti.</td>
+                        <td>
+                            <%
+                                if(data.date_expired){
+                                    expired_date = '<i style="color:blue" class="fa fa-info-circle"></i> License Anda expired pada : ' + data.date_expired
+                                }
+                                else{
+                                    expired_date = '<i style="color:red" class="fa fa-times-circle"></i> License belum diinstal'
+                                }
+                            %>
+                            <%- expired_date %>
+                        </td>
+                    </tr>
+                </table>
+                <p>Jika kendala diatas sudah Anda selesaikan, silahkan coba klik <a href="<%= fullUrl %>/refreshLicense" class="btn btn-info"> tombol ini</a></p>
+            </div>
+          </div>
+       </div>
+    </div>
+    <div class="row mt-4">
+        <div class="col">
+            <div class="card">
+                <div class="card-body">
+                    &copy; <%= new Date().getFullYear() %>, Powered By WHAPI
+                </div>
+            </div>
+        </div>
+    </div>
+ </div>

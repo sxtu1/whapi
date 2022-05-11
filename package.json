@@ -1,0 +1,38 @@
+{
+  "name": "whapi",
+  "version": "2.0.0",
+  "description": "Chatbot API",
+  "main": "index.js",
+  "author": "d0v3riz",
+  "license": "ISC",
+  "scripts": {
+    "start": "nodemon app.js"
+  },
+  "dependencies": {
+    "axios": "^0.21.1",
+    "bcrypt": "^5.0.1",
+    "body-parser": "^1.19.0",
+    "cookie-parser": "^1.4.5",
+    "cryptr": "^6.0.2",
+    "ejs": "^3.0.2",
+    "express": "^4.17.1",
+    "express-flash": "0.0.2",
+    "express-session": "^1.17.1",
+    "express-validator": "^6.10.0",
+    "google-libphonenumber": "^3.2.19",
+    "md5": "^2.3.0",
+    "moment": "^2.29.1",
+    "mongoose": "^5.12.3",
+    "nodejs-file-downloader": "^4.4.2",
+    "passport": "^0.4.1",
+    "passport-local": "^1.0.0",
+    "qrcode": "^1.4.4",
+    "socket.io": "^3.1.2",
+    "systeminformation": "^5.6.10",
+    "vcards-js": "^2.10.0",
+    "whatsapp-web.js": "^1.16.5"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.4"
+  }
+}

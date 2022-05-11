@@ -1,0 +1,82 @@
+<div class="row">
+    <div class="col-12 mb-3">
+        <div class="card user-card">
+            <div class="card-body">
+                <h2>Test Webhook</h2>
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th scope="col">Nama Notif</th>
+                            <th scope="col">Keterangan</th>
+                            <th scope="col">#</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <th><b>authenticated</b></th>
+                            <td>Notifikasi perangkat berhasil terhubung dengan aplikasi</td>
+                            <td><a href="#" data-href="authenticated" class="btn btn-info btn-sm test-webhook">Test</td>
+                        </tr>
+                        <tr>
+                            <th><b>battery</b></th>
+                            <td>Notifikasi baterai</td>
+                            <td><a href="#" data-href="battery" class="btn btn-info btn-sm test-webhook">Test</td>
+                        </tr>
+                        <tr>
+                            <th><b>message</b></th>
+                            <td>Notifikasi pesan masuk</td>
+                            <td><a href="#" data-href="message" class="btn btn-info btn-sm test-webhook">Test</td>
+                        </tr>
+                        <tr>
+                            <th><b>message_ack</b></th>
+                            <td>Notifikasi perubahan status pesan</td>
+                            <td><a href="#" data-href="message_ack" class="btn btn-info btn-sm test-webhook">Test</td>
+                        </tr>
+                        <tr>
+                            <th><b>change_state</b></th>
+                            <td>Notifikasi status koneksi</td>
+                            <td><a href="#" data-href="change_state" class="btn btn-info btn-sm test-webhook">Test</td>
+                        </tr>
+                        <tr>
+                            <th><b>group_join</b></th>
+                            <td>Notifikasi member join grup</td>
+                            <td><a href="#" data-href="group_join" class="btn btn-info btn-sm test-webhook">Test</td>
+                        </tr>
+                        <tr>
+                            <th><b>group_update</b></th>
+                            <td>Notifikasi update info grup</td>
+                            <td><a href="#" data-href="group_update" class="btn btn-info btn-sm test-webhook">Test</td>
+                        </tr>
+                        <tr>
+                            <th><b>group_leave</b></th>
+                            <td>Notifikasi member keluar grup</td>
+                            <td><a href="#" data-href="group_leave" class="btn btn-info btn-sm test-webhook">Test</td>
+                        </tr>
+                        <tr>
+                            <th><b>media_uploaded</b></th>
+                            <td>Notifikasi media berhasil diupload</td>
+                            <td><a href="#" data-href="media_uploaded" class="btn btn-info btn-sm test-webhook">Test</td>
+                        </tr>
+                        </tbody>
+                    </table>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $('.test-webhook').click(function(e) {
+        e.preventDefault()
+        $.ajax({
+            type: 'POST',
+            url: '../user/testWebhookExample',
+            data: { method: $(this).attr('data-href') },
+            success: function(e) {
+                $("#notif").notify(e.results.message, { position:"right", className: 'info', arrowShow: false });
+            },
+            error: function(xhr, status, error) {
+                var errorMessage = "Ada error : xhr = " + xhr.status + ' | pesan = ' + xhr.statusText;
+                $("#notif").notify(errorMessage, { position:"right", className: 'error', arrowShow: false });
+            }
+        });
+    })
+</script>

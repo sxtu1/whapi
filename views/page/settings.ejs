@@ -1,0 +1,193 @@
+<div class="row">
+    <div class="col-12">
+        <div class="row">
+            <div class="col">
+                <div class="card user-card mb-3">
+                    <div class="card-body">
+                        <h5>URL API</h5>
+                        <div class="alert alert-info" role="alert">
+                            <b><span><%= urlApi %></span></b>
+                        </div>
+                        <h5>API Key</h5>
+                        <div class="alert alert-info" role="alert">
+                            <b><span id="new-apikey"><%= detailUser.login.apiKey %></span></b>
+                        </div>
+                        <form id="change-apikey">    
+                            <button type="submit" class="btn btn-info">Ubah API Key</button>
+                        </form>
+                    </div>
+                </div>
+                <div class="card user-card mb-3">
+                    <div class="card-body">
+                        <form id="save-webhook">
+                            <h5>URL Webhook</h5>
+                            <div class="form-group">
+                                <input type="text" name="url_webhook" value="<%= settings.urlWebhook %>" class="form-control" autocomplete="off" placeholder="No Tujuan">
+                            </div>
+                            <h5>Notifikasi Downtime</h5>
+                            <div class="form-group">
+                                <label>Token Telegram</label>
+                                <input type="text" name="token_telegram" value="<%= settings.tokenTelegram %>" class="form-control" autocomplete="off">
+                            </div>
+                            <div class="form-group">
+                                <label>Username Telegram</label>
+                                <input type="text" name="id_telegram" value="<%= settings.idTelegram %>" class="form-control" autocomplete="off">
+                            </div>
+                            <button type="submit" class="btn btn-info">Simpan</button>
+                       </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card user-card mb-3">
+                    <div class="card-body">
+                        <h5>Pengaturan WHAPI</h5>
+                        <div class="form-group">
+                            <div class="alert alert-secondary" role="alert">
+                                <%
+                                    if(app.auto_reply){
+                                        autoreply_enabled = 'checked';
+                                    }
+                                    else{
+                                        autoreply_enabled = '';
+                                    }
+                                %>
+                                <div class="custom-control custom-switch">
+                                    <input type="checkbox" class="custom-control-input" id="auto-reply" <%= autoreply_enabled %>>
+                                    <label class="custom-control-label" for="auto-reply"><b>Auto Reply</b></label>
+                                </div>
+                                <hr/>
+                                Fitur ini berfungsi untuk membuat whatsapp Anda otomatis membalas pesan dengan keyword tertentu
+                            </div>
+                            <div class="alert alert-secondary" role="alert">
+                                <%
+                                    if(app.md_device){
+                                        multidevice_status_enabled = 'checked';
+                                    }
+                                    else{
+                                        multidevice_status_enabled = '';
+                                    }
+                                %>
+                                <div class="custom-control custom-switch">
+                                    <input type="checkbox" class="custom-control-input" id="md-feature" <%= multidevice_status_enabled %>>
+                                    <label class="custom-control-label" for="md-feature"><b>Multi-device <span class="badge badge-info">BETA</span></b></label>
+                                </div>
+                                <hr/>
+                                Dengan fitur ini, WHAPI akan selalu online 1x24 jam meskipun perangkat Anda offline. Anda tetap bisa membuka whatsapp web lain.
+                            </div>
+                            <div class="alert alert-secondary" role="alert">
+                                <%
+                                    if(app.webhook_site){
+                                        webhook_status_enabled = 'checked';
+                                    }
+                                    else{
+                                        webhook_status_enabled = '';
+                                    }
+                                %>
+                                <div class="custom-control custom-switch">
+                                    <input type="checkbox" class="custom-control-input" id="webhook-url" <%= webhook_status_enabled %>>
+                                    <label class="custom-control-label" for="webhook-url"><b>Webhook</b></label>
+                                </div>
+                                <hr/>
+                                Fitur ini berfungsi untuk mengirimkan notifikasi pesan masuk, status pesan, dll. Response webhook bisa dilihat <a href="<%= fullUrl %>/user/test-webhook">disini</a>.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $('#change-apikey').validate({
+        submitHandler: function(form) {
+            $.ajax({
+               type: 'POST',
+               url: '<%= fullUrl %>/user/newApiKey',
+               data: $('#change-apikey').serialize(),
+               success: function(e) {
+                   $("#new-apikey").html(e.results.apiKey)
+                   $("#notif").notify(e.results.message, { position:"right", className: 'info', arrowShow: false });
+               },
+               error: function(xhr, status, error) {
+                  var errorMessage = "Ada error : xhr = " + xhr.status + ' | pesan = ' + xhr.statusText;
+                  $("#notif").notify(errorMessage, { position:"right", className: 'error', arrowShow: false });
+               }
+            });
+        }
+    })
+
+    $('#save-webhook').validate({
+        rules: {
+            url_webhook: {
+                required: true
+            }
+        },
+        messages: {
+            url_webhook: {
+                required: 'URL Webhook wajib diisi'
+            }
+        },
+        submitHandler: function(form) {
+            $.ajax({
+               type: 'POST',
+               url: '<%= fullUrl %>/user/saveWebhook',
+               data: $('#save-webhook').serialize(),
+               success: function(e) {
+                   $("#notif").notify(e.results.message, { position:"right", className: 'info', arrowShow: false });
+               },
+               error: function(xhr, status, error) {
+                  var errorMessage = "Ada error : xhr = " + xhr.status + ' | pesan = ' + xhr.statusText;
+                  $("#notif").notify(errorMessage, { position:"right", className: 'error', arrowShow: false });
+               }
+            });
+        }
+    })
+
+    $(document).ready(function() {
+        $('#auto-reply').click(function(){
+            $.ajax({
+               type: 'POST',
+               url: '<%= fullUrl %>/user/activeAutoReply',
+               data: 'status=' + $(this).prop("checked"),
+               success: function(e) {
+                   $("#notif").notify(e.results.message, { position:"right", className: 'info', arrowShow: false });
+               },
+               error: function(xhr, status, error) {
+                  var errorMessage = "Ada error : xhr = " + xhr.status + ' | pesan = ' + xhr.statusText;
+                  $("#notif").notify(errorMessage, { position:"right", className: 'error', arrowShow: false });
+               }
+            });
+        });
+
+        $('#md-feature').click(function(){
+            $.ajax({
+               type: 'POST',
+               url: '<%= fullUrl %>/user/mdDevice',
+               data: 'status=' + $(this).prop("checked"),
+               success: function(e) {
+                   $("#notif").notify(e.results.message, { position:"right", className: 'info', arrowShow: false });
+               },
+               error: function(xhr, status, error) {
+                  var errorMessage = "Ada error : xhr = " + xhr.status + ' | pesan = ' + xhr.statusText;
+                  $("#notif").notify(errorMessage, { position:"right", className: 'error', arrowShow: false });
+               }
+            });
+        });
+
+        $('#webhook-url').click(function(){
+            $.ajax({
+               type: 'POST',
+               url: '<%= fullUrl %>/user/urlWebhook',
+               data: 'status=' + $(this).prop("checked"),
+               success: function(e) {
+                   $("#notif").notify(e.results.message, { position:"right", className: 'info', arrowShow: false });
+               },
+               error: function(xhr, status, error) {
+                  var errorMessage = "Ada error : xhr = " + xhr.status + ' | pesan = ' + xhr.statusText;
+                  $("#notif").notify(errorMessage, { position:"right", className: 'error', arrowShow: false });
+               }
+            });
+        });
+    });
+</script>

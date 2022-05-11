@@ -1,0 +1,6 @@
+{
+  "type": "disconnected",
+  "results": {
+    "state": "XXXX"
+  }
+}

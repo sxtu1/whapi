@@ -1,0 +1,262 @@
+<div class="row">
+   <div class="col-md-5">
+      <div class="card user-card">
+         <div class="card-body">
+           <h5 class="card-title"><i class="fa fa-qrcode"></i> QRCode Whatsapp Web</h5>
+            <div class="form-group text-center">
+               <img src="<%= fullUrl %>/img/loading.gif" class="img-fluid" alt="#">
+            </div>
+            <h4>Status
+              <%
+                 if (stateStatus == 'CONNECTED') {
+                    statusLabel = 'badge badge-success';
+                    bt_1 = 'disabled';
+                    bt_2 = '';
+                    bt_3 = '';
+                    bt_4 = '';
+                 } else if (stateStatus == 'CONFLICT' || stateStatus == 'DEPRECATED_VERSION' || stateStatus == 'PROXYBLOCK' || stateStatus == 'SMB_TOS_BLOCK' || stateStatus == 'TOS_BLOCK' || stateStatus == 'UNLAUNCHED') {
+                    statusLabel = 'badge badge-warning';
+                    bt_1 = 'disabled';
+                    bt_2 = 'disabled';
+                    bt_4 = '';
+                 } else if (stateStatus == 'OPENING' || stateStatus == 'PAIRING') {
+                    statusLabel = 'badge badge-info';
+                    bt_1 = 'disabled';
+                    bt_2 = 'disabled';
+                    bt_4 = '';
+                 } else if (stateStatus == 'TIMEOUT' || stateStatus == 'UNPAIRED' || stateStatus == 'UNPAIRED_IDLE') {
+                    statusLabel = 'badge badge-danger';
+                    bt_1 = 'disabled';
+                    bt_2 = 'disabled';
+                    bt_4 = '';
+                 } else if (stateStatus == 'SERVICE_OFF') {
+                    statusLabel = 'badge badge-secondary';
+                    bt_1 = '';
+                    bt_2 = 'disabled';
+                    bt_4 = 'disabled';
+                 } else if (stateStatus == 'SERVICE_SCAN') {
+                     statusLabel = 'badge badge-secondary';
+                     bt_1 = 'disabled';
+                     bt_2 = 'disabled';
+                     bt_4 = '';
+                 } 
+                 else if (stateStatus == null){
+                    statusLabel = 'badge badge-secondary';
+                 }
+              %>
+              <span class="<%= statusLabel %>" id="state"><%= stateStatus %></span></span>
+           </h4>
+           <p>
+            
+           </p>
+           <p>
+            <a href="#" data-toggle="modal" data-target="#exampleModal">
+               QRCode tidak muncul?
+            </a>
+           </p>
+            <button type="button" data-service="serviceStart" class="btn btn-success btn-block state" <%= bt_1 %>>Mulai Layanan</button>
+            <button type="button" data-service="serviceReset" class="btn btn-info btn-block state" <%= bt_2 %>>Reset Layanan</button>
+            <button type="button" data-service="serviceDestroy" class="btn btn-danger btn-block state" <%= bt_4 %>>Matikan Layanan</button>
+         </div>
+      </div>
+      <div class="card user-card mt-3 mb-3">
+         <div class="card-body">
+            <h5 class="card-title"><i class="fa fa-envelope"></i> Kirim Pesan</h5>
+            <form id="send-message">
+               <input type="hidden" name="apiKey" value="<%= detailUser.login.apiKey %>">
+               <div class="form-group">
+                  <input type="text" name="phone" class="form-control" autocomplete="off" placeholder="No Tujuan">
+               </div>
+               <div class="form-group">
+                  <textarea class="form-control" name="message" placeholder="Isi Pesan"></textarea>
+               </div>
+               <button type="submit" class="btn btn-success btn-block">Kirim</button>
+            </form>
+         </div>
+      </div>
+   </div>
+    <div class="col-md-7 col-xs-12">
+      <div class="card user-card mb-3">
+         <div class="card-body">
+            <h5><i class="fa fa-check-square"></i> Masa Aktif Aplikasi</h5>
+            <p>License<br/>
+            <b><%= license.license %></b><br/>
+            Berakhir Pada<br/>
+            <b id="">...</b>
+            </p>
+            <a href="https://whapi.id/payment_page.html?perpanjang=<%= license.license %>" class="btn btn-primary mb-3">Perpanjang Lisensi</a>
+            <a href="<%= fullUrl %>/uninstall-license" class="btn btn-danger mb-3" onclick="return confirm('Apakah Anda yakin ?, Data log sistem, dan data lainnya akan hilang, tindakan ini tidak bisa dibatalkan')">Uninstall Lisensi</a>
+            <h5><i class="fas fa-badge-check"></i> Versi Aplikasi</h5>
+            <p id="load_latest_version">Loading...</p>
+         </div>
+      </div>
+      <div id="load_announcement" class="mb-3">
+         <div class="card user-card">
+            <div class="card-body">
+               Tunggu sebentar...
+            </div>
+         </div>
+      </div>
+    </div>
+ </div>
+ <!-- Modal -->
+<div class="modal fade" id="exampleModal" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+   <div class="modal-dialog modal-dialog-centered">
+     <div class="modal-content">
+       <div class="modal-header">
+         <h5 class="modal-title" id="exampleModalLabel">QRCode tidak muncul</h5>
+         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+           <span aria-hidden="true">&times;</span>
+         </button>
+       </div>
+       <div class="modal-body">
+         <p>Ada beberapa faktor yang menyebabkan qrcode tidak muncul :</p>
+         <ol>
+            <li>Lokasi file executable google chrome tidak benar/tidak ditemukan. Perbaiki dengan mengubah nilai file <b>config.js</b></li>
+         </ol>
+         <p>Berikut ini adalah cara untuk mengatasi masalah ini :</p>
+         <ul>
+            <li>Silahkan <b>matikan layanan</b>, selanjutnya <b>mulai layanan</b>. Tunggu 10 detik, jika masih belum keluar lakukan hal yang sama hingga qrcode keluar.</li>
+         </ul>
+       </div>
+       <div class="modal-footer">
+         <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+       </div>
+     </div>
+   </div>
+ </div>
+ <script>
+var constApiKey = '<%= detailUser.login.apiKey %>'
+
+function disabledButton(s_start, s_reset, s_logout, s_destroy){
+   $("button[data-service='serviceStart']").prop("disabled", s_start);
+   $("button[data-service='serviceReset']").prop("disabled", s_reset);
+   $("button[data-service='serviceLogout']").prop("disabled", s_logout);
+   $("button[data-service='serviceDestroy']").prop("disabled", s_destroy);
+}
+
+$.get('../user/checkVersionApp', (e) => {
+      $('#load_latest_version').html(e)
+   }).fail(function() {
+      alert("Error load page");
+   })
+
+$(function() {
+
+   var qrCode = '<%= qrCode %>';
+
+   if (qrCode != '-') {
+      $("img").attr("src", qrCode).show();
+   }
+
+   var socket = io();
+   socket.on('qrcode', function(msg) {
+      $("img").attr("src", msg).show();
+   });
+   socket.on('event_change_state', function(state) {
+      if (state == 'CONNECTED') {
+         $("#state").removeClass();
+         $("#state").addClass('badge badge-success');
+         disabledButton(true, false, false, false);
+      } else if (state == 'CONFLICT' || state == 'DEPRECATED_VERSION' || state == 'PROXYBLOCK' || state == 'SMB_TOS_BLOCK' || state == 'TOS_BLOCK' || state == 'UNLAUNCHED') {
+         $("#state").removeClass();
+         $("#state").addClass('badge badge-warning');
+         disabledButton(true, true, true, false);
+      } else if (state == 'OPENING' || state == 'PAIRING') {
+         $("#state").removeClass();
+         $("#state").addClass('badge badge-info');
+         disabledButton(true, true, true, false);
+      } else if (state == 'TIMEOUT' || state == 'UNPAIRED' || state == 'UNPAIRED_IDLE') {
+         $("#state").removeClass();
+         $("#state").addClass('badge badge-danger');
+         disabledButton(true, true, true, false);
+      } else if (state == 'SERVICE_OFF') {
+         $("#state").removeClass();
+         $("#state").addClass('badge badge-secondary');
+         disabledButton(false, true, true, true);
+      } else if(state == 'SERVICE_SCAN'){
+         $("#state").removeClass();
+         $("#state").addClass('badge badge-secondary');
+         disabledButton(true, true, true, false);
+      }
+      if (state == 'SERVICE_OFF' || 'CONNECTED'){
+         $("img").attr("src", '<%= fullUrl %>/img/loading.gif');
+      }
+      if (state == null) {
+         $("#state").addClass('badge badge-secondary');
+         state = 'SERVICE_OFF';
+         disabledButton(true, true, true, false);
+      }
+      $("#state").html(state);
+   });
+
+    $('#send-message').validate({
+        rules: {
+            phone: {
+                required: true,
+                number: true
+            },
+            message: {
+               required: true
+            }
+        },
+        messages: {
+            phone: {
+                required: 'No handphone wajib diisi',
+                number: 'No. handphone wajib berisi angka'
+            },
+            message: {
+               required: 'Pesan Wajib Diisi'
+            }
+        },
+        submitHandler: function(form) {
+            $.ajax({
+               type: 'POST',
+               url: '<%= fullUrl %>/api/sendMessage',
+               data: $('#send-message').serialize(),
+               success: function(e) {
+                  $('input[name=phone]').val('')
+                  $('textarea[name=message]').val('')
+                  $("#notif").notify(e.results.message, { position:"right", className: 'info', arrowShow: false });
+               },
+               error: function(xhr, status, error) {
+                  var errorMessage = "Ada error : xhr = " + xhr.status + ' | pesan = ' + xhr.statusText;
+                  $("#notif").notify(errorMessage, { position:"right", className: 'error', arrowShow: false });
+               }
+            });
+        }
+    })
+
+    $(".state").click(function() {
+        $.ajax({
+            type: 'GET',
+            url: '<%= fullUrl %>/api/' + $(this).attr('data-service'),
+            data: {
+                apiKey: constApiKey
+            },
+            success: function(e) {
+               $("#notif").notify(e.results.message, { position:"right", className: 'info', arrowShow: false });
+            },
+            error: function(xhr, status, error) {
+                var errorMessage = "Ada error : xhr = " + xhr.status + ' | pesan = ' + xhr.statusText;
+                $("#notif").notify(errorMessage, { position:"right", className: 'error', arrowShow: false });
+            }
+        });
+   });
+
+});
+
+var delayApi = 10;
+
+$.get('<%= fullUrl %>/user/checkDateExpired', (e) => {
+   $('#load_date_exp').html(e)
+}).fail(function() {
+   alert("Error load license");
+})
+
+$.get('<%= fullUrl %>/user/checkAnnouncement', (e) => {
+   $('#load_announcement').html(e)
+}).fail(function() {
+   alert("Error load announcement");
+})
+ </script>

@@ -1,0 +1,57 @@
+body, html {
+	margin: 0;
+	padding: 0;
+	height: 100%;
+	background: #1abc9c !important;
+}
+
+label.error{
+	color: red;
+}
+
+.user_card {
+	height: 440px;
+	width: 350px;
+	margin-top: auto;
+	margin-bottom: auto;
+	background: #ffffff;
+	position: relative;
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+	padding: 25px;
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+	-webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+	-moz-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+	border-radius: 5px;
+}
+.form_container {
+	margin-top: 40px;
+	margin-bottom:30px;
+}
+.brand_logo_container {
+	position: absolute;
+	height: 170px;
+	width: 170px;
+	top: -75px;
+	border-radius: 50%;
+	background: #1abc9c;
+	padding: 10px;
+	text-align: center;
+}
+.brand_logo {
+	height: 150px;
+	width: 150px;
+	padding: 10px;
+	margin-bottom: 10px;
+}
+.input-group-text {
+	background: #bdc3c7 !important;
+	color: white !important;
+	border: 0 !important;
+}
+.input_user,
+.input_pass:focus {
+	box-shadow: none !important;
+	outline: 0px !important;
+}

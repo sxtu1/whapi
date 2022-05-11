@@ -1,0 +1,19 @@
+{
+  "type": "group_join",
+  "results": {
+    "id": {
+      "fromMe": true,
+      "remote": "XXXXXXXXXX-XXXXXXXXXX@g.us",
+      "id": "4240033265",
+      "_serialized": "true_XXXXXXXXXX-XXXXXXXXXX@g.us_4240033265"
+    },
+    "body": "",
+    "type": "add",
+    "timestamp": 1646379163,
+    "chatId": "XXXXXXXXXX-XXXXXXXXXX@g.us",
+    "author": "XXXXXXXXXX@c.us",
+    "recipientIds": [
+      "6283114617183@c.us"
+    ]
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "type": "group_leave",
+  "results": {
+    "id": {
+      "fromMe": true,
+      "remote": "XXXXXXXXXX-XXXXXXXXXX@g.us",
+      "id": "A9305610A3E536BF55172C8E4558D1F1",
+      "_serialized": "true_XXXXXXXXXX-XXXXXXXXXX@g.us_A9305610A3E536BF55172C8E4558D1F1"
+    },
+    "body": "",
+    "type": "leave",
+    "timestamp": 1646379116,
+    "chatId": "XXXXXXXXXX-XXXXXXXXXX@g.us",
+    "recipientIds": [
+      "XXXXXXXXXX@c.us"
+    ]
+  }
+}

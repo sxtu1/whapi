@@ -1,0 +1,72 @@
+<div class="row">
+    <div class="col-md-12">
+       <div class="card user-card">
+          <div class="card-body">
+            <h2>Tambah Keyword</h2>
+            <form id="add-keyword" method="post">
+                <div class="form-group">
+                    <label>Keyword</label>
+                    <input class="form-control" type="text" id="keyword" name="keyword">
+                </div>
+                <div class="form-group">
+                    <label>Tipe</label>
+                    <select class="form-control" name="type_keyword">
+                        <option value="text">Text</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Jawaban</label>
+                    <textarea class="form-control" id="reply" name="reply"></textarea>
+                </div>
+               <div class="form-group">
+                  <button class="btn btn-primary" type="submit">Tambah Data</button>
+                  <a href="<%= fullUrl %>/user/auto-reply" class="btn btn-info">Kembali</a>
+               </div>
+             </form>
+         </div>
+       </div>
+    </div>
+</div>
+<script>
+  $('#add-keyword').validate({
+    rules: {
+      keyword: {
+        required: true
+      },
+      type_keyword: {
+        required: true
+      },
+      reply:{
+        required: true
+      }
+    },
+    messages: {
+      keyword: {
+        required: 'Keyword wajib diisi'
+      },
+    type_keyword: {
+        required: 'Type wajib diisi'
+      },
+    reply:{
+        required: 'Jawaban wajib diisi'
+      }
+    },
+    submitHandler: function(form) {
+      $.ajax({
+          type: 'POST',
+          url: '<%= fullUrl %>/user/addKeywordSubmit',
+          data: $('#add-keyword').serialize(),
+          success: function(e) {
+            $('#keyword').val('');
+            $('#reply').val('');
+            $("#notif").notify(e.results.message, { position:"right", className: 'info', arrowShow: false });
+          },
+          error: function(xhr, status, error) {
+            var errorMessage = "Ada error : xhr = " + xhr.status + ' | pesan = ' + xhr.statusText;
+            $("#notif").notify(errorMessage, { position:"right", className: 'error', arrowShow: false });
+          }
+      });
+    }
+  });
+
+</script>

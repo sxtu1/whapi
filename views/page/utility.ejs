@@ -1,0 +1,298 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="card user-card">
+            <div class="card-body">
+                <h2>Tools</h2>
+                Beberapa tools dibawah ini adalah implementasi dari API Whatsapp, selengkapnya Anda bisa buka halaman dokumentasi. Sebelum menggunakan tools, perangkat wajib terhubung dengan aplikasi.
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row mt-3">
+    <div class="col-md-6">
+        <div class="card user-card">
+            <div class="card-body">
+               <h5 class="card-title">Kirim Pesan</h5>
+               <form id="send-message">
+                  <input type="hidden" name="apiKey" value="<%= detailUser.login.apiKey %>">
+                  <div class="form-group">
+                     <input type="text" name="phone" class="form-control" autocomplete="off" placeholder="No Tujuan">
+                  </div>
+                  <div class="form-group">
+                     <textarea class="form-control" name="message" placeholder="Isi Pesan"></textarea>
+                  </div>
+                  <button type="submit" class="btn btn-success btn-block">Kirim</button>
+               </form>
+            </div>
+        </div>
+        <div class="card user-card mt-3">
+            <div class="card-body">
+               <h5 class="card-title">Mute Nomor</h5>
+               <form id="mute-number">
+                  <input type="hidden" name="second" value="20">
+                  <input type="hidden" name="apiKey" value="<%= detailUser.login.apiKey %>">
+                  <div class="form-group">
+                     <input type="text" name="phone" class="form-control" autocomplete="off" placeholder="No Tujuan">
+                  </div>
+                  <button type="submit" class="btn btn-success btn-block">Mute</button>
+               </form>
+            </div>
+        </div>
+        <div class="card user-card mt-3 mb-3">
+            <div class="card-body">
+               <h5 class="card-title">Unmute Nomor</h5>
+               <form id="unmute-number">
+                  <input type="hidden" name="apiKey" value="<%= detailUser.login.apiKey %>">
+                  <div class="form-group">
+                     <input type="text" name="phone" class="form-control" autocomplete="off" placeholder="No Tujuan">
+                  </div>
+                  <button type="submit" class="btn btn-success btn-block">Unmute</button>
+               </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card user-card">
+            <div class="card-body">
+               <h5 class="card-title">Cek Nomor Whatsapp</h5>
+               <form id="check-number">
+                  <input type="hidden" name="apiKey" value="<%= detailUser.login.apiKey %>">
+                  <div class="form-group">
+                     <input type="text" name="phone" class="form-control" autocomplete="off" placeholder="No Tujuan">
+                  </div>
+                  <button type="submit" class="btn btn-success btn-block">Cek</button>
+               </form>
+            </div>
+        </div>
+        <div class="card user-card mt-3">
+            <div class="card-body">
+               <h5 class="card-title">Cek Baterai</h5>
+               <form id="check-battery">
+                  <input type="hidden" name="apiKey" value="<%= detailUser.login.apiKey %>">
+                  <button type="submit" class="btn btn-success btn-block">Cek</button>
+               </form>
+            </div>
+        </div>
+        <div class="card user-card mt-3">
+            <div class="card-body">
+               <h5 class="card-title">Cek Versi Whatsapp Web</h5>
+               <form id="check-version">
+                  <input type="hidden" name="apiKey" value="<%= detailUser.login.apiKey %>">
+                  <button type="submit" class="btn btn-success btn-block">Cek</button>
+               </form>
+            </div>
+        </div>
+        <div class="card user-card mt-3 mb-3">
+            <div class="card-body">
+               <h5 class="card-title">Gabung Grup</h5>
+               <form id="join-group">
+                  <input type="hidden" name="apiKey" value="<%= detailUser.login.apiKey %>">
+                    <div class="form-group">
+                        <input type="text" name="inviteCode" class="form-control" autocomplete="off" placeholder="Kode Invite">
+                    </div>
+                  <button type="submit" class="btn btn-success btn-block">Gabung Grup</button>
+               </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $('#send-message').validate({
+        rules: {
+            phone: {
+                required: true,
+                number: true
+            },
+            message: {
+               required: true
+            }
+        },
+        messages: {
+            phone: {
+                required: 'No handphone wajib diisi',
+                number: 'No. handphone wajib berisi angka'
+            },
+            message: {
+               required: 'Pesan Wajib Diisi'
+            }
+        },
+        submitHandler: function(form) {
+            $.ajax({
+               type: 'POST',
+               url: '../api/sendMessage',
+               data: $('#send-message').serialize(),
+               success: function(e) {
+                  $("#notif").notify(e.results.message, { position:"right", className: 'info', arrowShow: false });
+               },
+               error: function(xhr, status, error) {
+                  var errorMessage = "Ada error : xhr = " + xhr.status + ' | pesan = ' + xhr.statusText;
+                  $("#notif").notify(errorMessage, { position:"right", className: 'error', arrowShow: false });
+               }
+            });
+        }
+    })
+    
+    $('#mute-number').validate({
+        rules: {
+            phone: {
+                required: true,
+                number: true
+            }
+        },
+        messages: {
+            phone: {
+                required: 'No handphone wajib diisi',
+                number: 'No. handphone wajib berisi angka'
+            }
+        },
+        submitHandler: function(form) {
+            $.ajax({
+               type: 'POST',
+               url: '../api/muteChat',
+               data: $('#mute-number').serialize(),
+               success: function(e) {
+                  $("#notif").notify(e.results.message, { position:"right", className: 'info', arrowShow: false });
+               },
+               error: function(xhr, status, error) {
+                  var errorMessage = "Ada error : xhr = " + xhr.status + ' | pesan = ' + xhr.statusText;
+                  $("#notif").notify(errorMessage, { position:"right", className: 'error', arrowShow: false });
+               }
+            });
+        }
+    })
+
+    $('#unmute-number').validate({
+        rules: {
+            phone: {
+                required: true,
+                number: true
+            }
+        },
+        messages: {
+            phone: {
+                required: 'No handphone wajib diisi',
+                number: 'No. handphone wajib berisi angka'
+            }
+        },
+        submitHandler: function(form) {
+            $.ajax({
+               type: 'POST',
+               url: '../api/unmuteChat',
+               data: $('#unmute-number').serialize(),
+               success: function(e) {
+                  $("#notif").notify(e.results.message, { position:"right", className: 'info', arrowShow: false });
+               },
+               error: function(xhr, status, error) {
+                  var errorMessage = "Ada error : xhr = " + xhr.status + ' | pesan = ' + xhr.statusText;
+                  $("#notif").notify(errorMessage, { position:"right", className: 'error', arrowShow: false });
+               }
+            });
+        }
+    })
+
+    $('#check-number').validate({
+        rules: {
+            phone: {
+                required: true,
+                number: true
+            }
+        },
+        messages: {
+            phone: {
+                required: 'No handphone wajib diisi',
+                number: 'No. handphone wajib berisi angka'
+            }
+        },
+        submitHandler: function(form) {
+            $.ajax({
+               type: 'POST',
+               url: '../api/isRegisteredNumber',
+               data: $('#check-number').serialize(),
+               success: function(e) {
+                  $("#notif").notify(e.results.message, { position:"right", className: 'info', arrowShow: false });
+               },
+               error: function(xhr, status, error) {
+                  var errorMessage = "Ada error : xhr = " + xhr.status + ' | pesan = ' + xhr.statusText;
+                  $("#notif").notify(errorMessage, { position:"right", className: 'error', arrowShow: false });
+               }
+            });
+        }
+    })
+
+    $('#check-battery').validate({
+        submitHandler: function(form) {
+            $.ajax({
+               type: 'GET',
+               url: '../api/infoBatteryStatus',
+               data: $('#check-number').serialize(),
+               success: function(e) {
+                   if (e.code == 200) {
+                       if (e.results.plugged) {
+                           var plugged = 'Ya';
+                       }
+                       else{
+                        var plugged = 'Tidak';
+                       }
+                       $("#notif").notify('Persentasi baterai : ' + e.results.battery + '% | Dicas ?' + plugged , { position:"right", className: 'info', arrowShow: false });
+                   }
+                   else{
+                       $("#notif").notify(e.results.message, { position:"right", className: 'info', arrowShow: false });
+                   }
+               },
+               error: function(xhr, status, error) {
+                  var errorMessage = "Ada error : xhr = " + xhr.status + ' | pesan = ' + xhr.statusText;
+                  $("#notif").notify(errorMessage, { position:"right", className: 'error', arrowShow: false });
+               }
+            });
+        }
+    })
+
+    $('#check-version').validate({
+        submitHandler: function(form) {
+            $.ajax({
+               type: 'GET',
+               url: '../api/getWWebVersion',
+               data: $('#check-number').serialize(),
+               success: function(e) {
+                    if (e.code == 200){
+                        $("#notif").notify('Versi whatsapp web saat ini : ' + e.results.version, { position:"right", className: 'info', arrowShow: false });
+                    } else {
+                        $("#notif").notify(e.results.message, { position:"right", className: 'info', arrowShow: false });
+                    }
+               },
+               error: function(xhr, status, error) {
+                  var errorMessage = "Ada error : xhr = " + xhr.status + ' | pesan = ' + xhr.statusText;
+                  $("#notif").notify(errorMessage, { position:"right", className: 'error', arrowShow: false });
+               }
+            });
+        }
+    })
+
+    $('#join-group').validate({
+        rules: {
+            inviteCode: {
+                required: true
+            }
+        },
+        messages: {
+            inviteCode: {
+                required: 'Kode invite wajib diisi'
+            }
+        },
+        submitHandler: function(form) {
+            $.ajax({
+               type: 'POST',
+               url: '../api/acceptInvite',
+               data: $('#join-group').serialize(),
+               success: function(e) {
+                  $("#notif").notify(e.results.message, { position:"right", className: 'info', arrowShow: false });
+               },
+               error: function(xhr, status, error) {
+                  var errorMessage = "Ada error : xhr = " + xhr.status + ' | pesan = ' + xhr.statusText;
+                  $("#notif").notify(errorMessage, { position:"right", className: 'error', arrowShow: false });
+               }
+            });
+        }
+    })
+</script>

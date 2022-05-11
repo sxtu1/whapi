@@ -1,0 +1,18 @@
+{
+  "type": "group_leave",
+  "results": {
+    "id": {
+      "fromMe": true,
+      "remote": "XXXX",
+      "id": "XXXX",
+      "_serialized": "XXXX"
+    },
+    "body": "",
+    "type": "leave",
+    "timestamp": 1234,
+    "chatId": "XXXX",
+    "recipientIds": [
+      "XXXX"
+    ]
+  }
+}

@@ -1,0 +1,70 @@
+<div class="row">
+    <div class="col-md-12">
+       <div class="card user-card">
+            <div class="card-body">
+                <div class="form-group">
+                    <a href="<%= fullUrl %>/user/addKeyword" class="btn btn-success">Tambah Keyword</a>
+                </div>
+                <table id="example" class="table table-striped table-bordered dt-responsive nowrap" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>Keyword</th>
+                            <th>Tipe</th>
+                            <th>Jawaban</th>
+                            <th>Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div> 
+        </div>
+    </div>
+</div>
+
+<script>
+    var deleteConfirm;
+    $(document).ready( function () {
+         var table = $('#example').DataTable({
+            "processing": true,
+            "serverSide": true,
+            "order":[],
+            "ajax":{
+                url: '<%= fullUrl %>/api/keywordDt'
+            },
+            'columns':[
+                    { 'data': 'keyword' },
+                    { 'data': 'type' },
+                    { 'data': 'response_reply' },
+                    { 'data': 'action' }
+            ],
+            "columnDefs":[{
+                    "targets":[0, 1, 2, 3],
+                    "orderable":false,
+                },
+            ],
+            "aLengthMenu": [[10, 20, 30, 40, 50], [10, 20, 30, 40, 50]],
+            "iDisplayLength": 5,
+        });
+
+        deleteConfirm = function(id){
+            var r = confirm("Apakah Anda yakin ingin menghapus data ini ?");
+            if (r == true) {
+                $.ajax({
+                    url: '<%= fullUrl %>/api/deleteKeyword',
+                    type: 'post',
+                    data: "_id=" + id,
+                    success: function(e) {
+                        if (e.code == 200) {
+                            table.ajax.reload();
+                            $("#notif").notify(e.results.message, { position:"right", className: 'info', arrowShow: false });
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        var errorMessage = "Ada error : xhr = " + xhr.status + ' | pesan = ' + xhr.statusText;
+                        $("#notif").notify(errorMessage, { position:"right", className: 'error', arrowShow: false });
+                    }
+            });
+            }
+        }
+    });
+</script>

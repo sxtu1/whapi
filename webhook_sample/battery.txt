@@ -1,0 +1,7 @@
+{
+  "type": "battery",
+  "results": {
+    "battery": 0,
+    "plugged": false
+  }
+}

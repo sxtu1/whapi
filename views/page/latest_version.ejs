@@ -1,0 +1,63 @@
+<table class="table table-bordered">
+    <tbody>
+      <tr>
+        <td>Engine</td>
+        <td>:</td>
+        <td><%= (oldVersion == 'pedroslopez/whatsapp-web.js#multidevice' ? '-' : oldVersion) %></td>
+      </tr>
+      <tr>
+        <%
+            if(needUpdate){
+                text = 'Versi Paling Baru';
+                bg = 'success';
+            }
+            else if(oldVersion == 'pedroslopez/whatsapp-web.js#multidevice'){
+                text = '-';
+                bg = 'warning';
+            }
+            else{
+                text = 'Segera update ke <b>'+latestVersion+'</b>';
+                bg = 'danger';
+            }
+        %>
+        <td colspan="3" class="table-<%= bg %>">
+            <%- text %>
+        </td>
+      </tr>
+      <tr>
+        <td>WHAPI</td>
+        <td>:</td>
+        <td><%= oldVersionWhapi %></td>
+      </tr>
+      <tr>
+        <%
+            if(needUpdateWhapi){
+                text = 'Versi Paling Baru';
+                bg = 'success';
+            }
+            else{
+                text = 'Segera update ke <b>'+latestVersionWhapi+'</b>';
+                bg = 'danger';
+            }
+        %>
+        <td colspan="3" class="table-<%= bg %>">
+            <%- text %>
+        </td>
+    </tr>
+    <tr>
+      <td>Multi-device</td>
+      <td>:</td>
+      <td>
+        <%
+            if(app.md_device){
+                status = '<span class="badge badge-success">Aktif</span>';
+            }
+            else{
+                status = '<span class="badge badge-info">Tidak Aktif</span>';
+            }
+        %>
+        <%- status %>
+      </td>
+    </tr>
+    </tbody>
+  </table>

@@ -1,0 +1,6 @@
+{
+  "type": "change_state",
+  "results": {
+    "state": "CONNECTED"
+  }
+}
